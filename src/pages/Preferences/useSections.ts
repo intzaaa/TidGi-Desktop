@@ -8,7 +8,6 @@ import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import CodeIcon from '@mui/icons-material/Code';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LanguageIcon from '@mui/icons-material/Language';
-import LanguageModelIcon from '@mui/icons-material/Psychology';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -43,11 +42,6 @@ export function usePreferenceSections<SectionTitleElement = HTMLSpanElement>(): 
       Icon: WidgetsIcon,
       ref: useRef<SectionTitleElement>(null),
     },
-    [PreferenceSections.languageModel]: {
-      text: t('Preference.LanguageModel.Title'),
-      Icon: LanguageModelIcon,
-      ref: useRef<SectionTitleElement>(null),
-    },
     [PreferenceSections.sync]: {
       text: t('Preference.Sync'),
       Icon: GitHubIcon,
@@ -78,11 +72,11 @@ export function usePreferenceSections<SectionTitleElement = HTMLSpanElement>(): 
       Icon: CloudDownloadIcon,
       ref: useRef<SectionTitleElement>(null),
     },
-    [PreferenceSections.network]: {
-      text: t('Preference.Network'),
-      Icon: RouterIcon,
-      ref: useRef<SectionTitleElement>(null),
-    },
+    // [PreferenceSections.network]: {
+    //   text: t('Preference.Network'),
+    //   Icon: RouterIcon,
+    //   ref: useRef<SectionTitleElement>(null),
+    // },
     [PreferenceSections.privacy]: {
       text: t('Preference.PrivacyAndSecurity'),
       Icon: SecurityIcon,

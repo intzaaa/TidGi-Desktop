@@ -179,6 +179,11 @@
     "BackupOnIntervalDescription": "When enabled, data will be automatically backed up with local Git at regular intervals (interval in global settings), so that even if no cloud git synchronization address is configured, it will be automatically backed up locally.",
     "WikiRootTiddler": "Wiki Root Tiddler",
     "WikiRootTiddlerDescription": "Wiki's root tiddler determines the core behavior of the system, please read the official documentation to understand before modifying",
+    "WikiRootTiddlerItems": {
+      "all": "Load all at once",
+      "lazy-images": "Load images on demand",
+      "lazy-all": "Load images and text on demand"
+    },
     "ReadOnlyModeDescription": "Can be used with intranet penetration, allowing TidGi work as a server program  to deploy blogs. After opening, wiki can only be modified by directly modifying the file on the disk  (including using git synchronization). The content cannot be modified on the web page, but anyone can access it.",
     "ReadOnlyMode": "ReadOnly Mode",
     "TokenAuth": "Token Authenticate",
@@ -203,14 +208,17 @@
     "HTTPSKeyPathDescription": "The location of the private key file with the suffix .key.",
     "LastNodeJSArgv": "Command line arguments from the latest startup",
     "EnableHTTPAPI": "Enable HTTP APIs",
-    "EnableHTTPAPIDescription": "Allow third-party programs such as Tiddloid, MaoXianWebclipper clipper, etc. to read and modify your notes through the HTTP network interface.",
+    "EnableHTTPAPIDescription": "Allow third-party programs such as TidGi-Mobile, Tiddlywiki-Collector webclipper, etc. to read and modify your notes through the HTTP network interface.",
     "TokenAuthCurrentToken": "Current Token of Token Auth",
     "TokenAuthCurrentTokenDescription": "This token is confidential, which needs to be regenerated after being leaked to a hostile entity, and credentials need to be updated for connected third-party applications after regeneration",
     "Generate": "Generate",
     "TokenAuthCurrentTokenEmptyText": "Click the Generate button to generate a new credential",
     "ClickToExpand": "Click To Expand",
     "MainWorkspacePath": "Main Workspace Path",
-    "IsSubWorkspace": "Is SubWorkspace"
+    "IsSubWorkspace": "Is SubWorkspace",
+    "AppearanceOptions": "Appearance Options",
+    "SaveAndSyncOptions": "Save And Sync",
+    "MiscOptions": "Misc"
   },
   "Dialog": {
     "CantFindWorkspaceFolderRemoveWorkspace": "Cannot find the workspace folder that was still there before! \nThe folders that should have existed here may have been removed, or there is no wiki in this folder! \nDo you want to remove the workspace?",
@@ -380,22 +388,6 @@
     "HideSideBarIconDetail": "Hide the icon and only display the name of the workspace to make the workspace list more compact",
     "OpenV8CacheFolder": "Open the V8 cache folder",
     "OpenV8CacheFolderDetail": "The V8 cache folder stores cached files that accelerate application startup",
-    "LanguageModel": {
-      "Title": "Language Model",
-      "DefaultModel": "Default language model file name",
-      "DefaultModelDescription": "Each runner can load different models. This is the default model file name for each runner.",
-      "TimeoutDuration": "Timeout Duration",
-      "UpdateTimeoutDuration": "Unit (Second). If a language model does not respond after so long, it will automatically terminate the conversation and stop waiting, as this basically means that it has stopped running. It needs to be greater than 0 and not too small, otherwise it will not be output properly.",
-      "OpenModelFolder": "Open Model Folder",
-      "OpenModelFolderDescription": "The inference program will look for models in this folder, please put your downloaded models here (or use the command line to create a soft link to here)",
-      "ModelLoaded": "Model Loaded",
-      "ModelNotLoaded": "Model Not Loaded",
-      "LoadModel": "Load Model",
-      "UnLoadModel": "UnLoad Model",
-      "UnLoadModelDescription": "Clicking to unload the model releases memory, but it needs to be reloaded when used again, which consumes additional time",
-      "LoadModelDescription": "Clicking Try to load a model can be used to check if the model is ready for use. or pre-loaded for use within Tiddlywiki, but the parameters here may not be the same as those provided by the plugin within Tiddlywiki, resulting in inconsistent behavior.",
-      "LoadingModel": "Loading Model"
-    },
     "RunOnBackground": "Run On Background",
     "RunOnBackgroundDetail": "When window is closed, Continue to run in the background without exiting. Quickly restore the window when opening the app again.",
     "RunOnBackgroundDetailNotMac": "Recommend to enable Attach To Taskbar. So you can restore window use it.",
@@ -477,16 +469,6 @@
   "ClickForDetails": "Click For Details",
   "Scripting": {
     "ExecutingScript": "Executing Script"
-  },
-  "LanguageModel": {
-    "ModelNotExist": "Model Not Exist",
-    "OpenThisPath": "Open This Path",
-    "ModelNotExistDescription": "Try to load the model using this path you gave, but there is actually no model needed at this location",
-    "GenerationTimeout": "Generation Timeout, Terminated",
-    "ModelLoadingProgress": "Model Loading",
-    "ModelDisposed": "Model Disposed, Terminated (Need to reload language model)",
-    "RunModelError": "Run Model Error",
-    "NoBinaryFoundError": "TidGi's built-in model loader cannot be found. There may be a bug."
   },
   "Description": "Description",
   "Tags": "Tags",

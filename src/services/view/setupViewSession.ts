@@ -10,7 +10,7 @@ export function setupViewSession(workspace: IWorkspace, preferences: IPreference
 
   // configure session, proxy & ad blocker
   const partitionId = shareWorkspaceBrowsingData ? 'persist:shared' : `persist:${workspace.id}`;
-  // prepare configs for start a BrowserView that loads wiki's web content
+  // prepare configs for start a WebContentsView that loads wiki's web content
   // session
   const sessionOfView = session.fromPartition(partitionId);
   // spellchecker
@@ -18,7 +18,9 @@ export function setupViewSession(workspace: IWorkspace, preferences: IPreference
     sessionOfView.setSpellCheckerLanguages(spellcheckLanguages);
   }
   sessionOfView.webRequest.onBeforeSendHeaders((details, callback) => {
-    assignFakeUserAgent(details);
+    if (!details.frame?.url || details.frame?.url.startsWith('tidgi://')) {
+      assignFakeUserAgent(details);
+    }
     callback({ cancel: false, requestHeaders: details.requestHeaders });
   });
   return sessionOfView;

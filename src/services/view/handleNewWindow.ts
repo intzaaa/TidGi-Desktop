@@ -1,4 +1,4 @@
-import { BrowserView, BrowserWindowConstructorOptions, shell } from 'electron';
+import { BrowserWindowConstructorOptions, shell, WebContentsView } from 'electron';
 import windowStateKeeper from 'electron-window-state';
 
 import { SETTINGS_FOLDER } from '@/constants/appPaths';
@@ -17,7 +17,7 @@ import { handleOpenFileExternalLink } from './setupViewFileProtocol';
 export interface INewWindowContext {
   meta: IViewMeta;
   sharedWebPreferences: BrowserWindowConstructorOptions['webPreferences'];
-  view: BrowserView;
+  view: WebContentsView;
   workspace: IWorkspace;
 }
 
@@ -88,7 +88,7 @@ export function handleNewWindow(
       nextDomain,
     });
     meta.forceNewWindow = false;
-    const metadataConfig = {
+    const webPreferences = {
       additionalArguments: [
         `${MetaDataChannel.browserViewMetaData}${WindowNames.view}`,
         `${MetaDataChannel.browserViewMetaData}${encodeURIComponent(JSON.stringify(browserViewMetaData))}`,
@@ -106,7 +106,7 @@ export function handleNewWindow(
       y: windowWithBrowserViewState.y,
       width: windowWithBrowserViewState.width,
       height: windowWithBrowserViewState.height,
-      webPreferences: metadataConfig,
+      webPreferences,
       autoHideMenuBar: true,
     };
 

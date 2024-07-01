@@ -5,7 +5,7 @@ import { logger } from '@services/libs/log';
 import { INativeService } from '@services/native/interface';
 import serviceIdentifier from '@services/serviceIdentifier';
 import type { IWikiService } from '@services/wiki/interface';
-import { BrowserView, shell } from 'electron';
+import { shell, WebContentsView } from 'electron';
 import fs from 'fs-extra';
 import type { INewWindowContext } from './handleNewWindow';
 import { INewWindowAction } from './interface';
@@ -54,7 +54,7 @@ export function handleOpenFileExternalLink(nextUrl: string, newWindowContext: IN
 /**
  * Handle file protocol in webview to request file content and show in the view.
  */
-export function handleViewFileContentLoading(view: BrowserView) {
+export function handleViewFileContentLoading(view: WebContentsView) {
   view.webContents.session.webRequest.onBeforeRequest((details, callback) => {
     if (details.url.startsWith('file://')) {
       handleFileLink(details, callback);
@@ -70,7 +70,13 @@ function handleFileLink(details: Electron.OnBeforeRequestListenerDetails, callba
   const nativeService = container.get<INativeService>(serviceIdentifier.NativeService);
   const absolutePath: string | undefined = nativeService.formatFileUrlToAbsolutePath(details.url);
   // When details.url is an absolute route, we just load it, don't need any redirect
-  if (`file://${absolutePath}` === decodeURI(details.url) || absolutePath === decodeURI(details.url)) {
+  if (
+    `file://${absolutePath}` === decodeURI(details.url) ||
+    absolutePath === decodeURI(details.url) ||
+    // also allow malformed `file:///` on `details.url` on windows, prevent infinite redirect when this check failed.
+    (process.platform === 'win32' && `file:///${absolutePath}` === decodeURI(details.url))
+  ) {
+    logger.debug(`Open file protocol to ${String(absolutePath)}`, { function: 'handleFileLink' });
     callback({
       cancel: false,
     });

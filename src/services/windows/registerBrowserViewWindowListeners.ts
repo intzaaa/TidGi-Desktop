@@ -1,6 +1,7 @@
 import { container } from '@services/container';
 import { IPreferenceService } from '@services/preferences/interface';
 import serviceIdentifier from '@services/serviceIdentifier';
+import { IViewService } from '@services/view/interface';
 import { IWorkspaceViewService } from '@services/workspacesView/interface';
 import { BrowserWindow } from 'electron';
 import { IWindowService } from './interface';
@@ -10,13 +11,14 @@ export function registerBrowserViewWindowListeners(newWindow: BrowserWindow, win
   const preferenceService = container.get<IPreferenceService>(serviceIdentifier.Preference);
   const windowService = container.get<IWindowService>(serviceIdentifier.Window);
   const workspaceViewService = container.get<IWorkspaceViewService>(serviceIdentifier.WorkspaceView);
+  const viewService = container.get<IViewService>(serviceIdentifier.View);
 
   // Enable swipe to navigate
   void preferenceService.get('swipeToNavigate').then((swipeToNavigate) => {
     if (swipeToNavigate) {
       if (newWindow === undefined) return;
-      newWindow.on('swipe', (_event, direction) => {
-        const view = newWindow?.getBrowserView?.();
+      newWindow.on('swipe', async (_event, direction) => {
+        const view = await viewService.getActiveBrowserView();
         // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
         if (view) {
           if (direction === 'left') {
@@ -40,9 +42,9 @@ export function registerBrowserViewWindowListeners(newWindow: BrowserWindow, win
     }
   });
 
-  newWindow.on('focus', () => {
+  newWindow.on('focus', async () => {
     if (windowName !== WindowNames.main || newWindow === undefined) return;
-    const view = newWindow?.getBrowserView?.();
+    const view = await viewService.getActiveBrowserView();
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     view?.webContents?.focus?.();
   });
